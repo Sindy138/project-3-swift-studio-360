@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING
+  PROGRESS
+  DONE
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  role      Role     @default(USER)
+  profile   Profile?
+  orders    Order[]
+  createdAt DateTime @default(now())
+}
+
+model Profile {
+  id          String  @id @default(cuid())
+  fullName    String?
+  phone       String?
+  companyName String?
+  userId      String  @unique
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  price       Float
+  category    String
+  formConfig  Json
+  orders      Order[]
+  createdAt   DateTime @default(now())
+}
+
+model Order {
+  id          String      @id @default(cuid())
+  status      OrderStatus @default(PENDING)
+  configData  Json
+  total       Float
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Restrict)
+  serviceId   String
+  service     Service     @relation(fields: [serviceId], references: [id], onDelete: Restrict)
+  deliverables Deliverable[]
+  createdAt   DateTime    @default(now())
+}
+
+model Deliverable {
+  id        String   @id @default(cuid())
+  label     String
+  url       String
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
