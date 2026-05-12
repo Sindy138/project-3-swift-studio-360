@@ -48,6 +48,7 @@ model Service {
   price       Float
   category    String
   formConfig  Json
+  isActive    Boolean  @default(true)
   orders      Order[]
   createdAt   DateTime @default(now())
 }

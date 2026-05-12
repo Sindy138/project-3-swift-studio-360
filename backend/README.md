@@ -104,6 +104,7 @@ backend/
 │   │       └── orders.schema.js
 │   ├── middlewares/
 │   │   ├── auth.middleware.js        # authenticate (JWT) · isAdmin (rol ADMIN)
+│   │   ├── validate.middleware.js    # Validación de req.body con schema Zod
 │   │   └── error.middleware.js       # Manejador centralizado de errores
 │   ├── lib/
 │   │   └── prisma.js                 # Instancia única del PrismaClient
@@ -156,6 +157,7 @@ Order ──────────── Deliverable[] (1:N — cascade delete
 | price | Float | Precio en euros |
 | category | String | SEO / Contenidos / Fotografía / Automatización |
 | formConfig | Json | Configuración del formulario dinámico de contratación |
+| isActive | Boolean | `true` por defecto — `false` tras soft delete |
 | createdAt | DateTime | Fecha de creación |
 
 ### Order
@@ -187,7 +189,7 @@ Order ──────────── Deliverable[] (1:N — cascade delete
 | Método | Ruta | Descripción | Auth |
 |---|---|---|---|
 | POST | `/api/auth/register` | Registra un nuevo usuario, devuelve JWT | No |
-| POST | `/api/auth/login` | Valida credenciales, devuelve JWT | No |
+| POST | `/api/auth/login` | Valida credenciales, devuelve JWT | No (rate limit: 10/15min) |
 
 **Body register / login:**
 ```json
@@ -210,6 +212,107 @@ Order ──────────── Deliverable[] (1:N — cascade delete
 - Contraseña mínimo 8 caracteres → `400 Bad Request`
 - Credenciales incorrectas en login → `401 Unauthorized`
 
+---
+
+### Servicios — `/api/services`
+
+| Método | Ruta | Descripción | Auth |
+|---|---|---|---|
+| GET | `/api/services` | Lista todos los servicios activos | No |
+| GET | `/api/services/:id` | Detalle de un servicio | No |
+| POST | `/api/services` | Crear servicio | Admin |
+| PUT | `/api/services/:id` | Editar servicio | Admin |
+| DELETE | `/api/services/:id` | Desactivar servicio (soft delete) | Admin |
+
+**Body POST/PUT:**
+```json
+{
+  "name": "Auditoría Técnica Express",
+  "description": "Análisis completo del estado SEO...",
+  "price": 299,
+  "category": "SEO",
+  "formConfig": { "fields": [...] }
+}
+```
+
+**Reglas de negocio:**
+- DELETE no borra el registro, pone `isActive: false` → ya no aparece en listados públicos
+- Todos los campos son opcionales en PUT (actualización parcial)
+
+---
+
+### Pedidos — `/api/orders`
+
+| Método | Ruta | Descripción | Auth |
+|---|---|---|---|
+| POST | `/api/orders` | Crear pedido para el usuario autenticado | Usuario |
+| GET | `/api/orders` | Admin: todos los pedidos. Usuario: solo los suyos | Usuario |
+| GET | `/api/orders/:id` | Detalle de un pedido | Admin o propietario |
+| PUT | `/api/orders/:id/status` | Cambiar estado del pedido | Admin |
+
+**Body POST:**
+```json
+{
+  "serviceId": "clxyz...",
+  "configData": { "websiteUrl": "https://...", "mainGoal": "Aumentar tráfico orgánico" }
+}
+```
+
+**Body PUT status:**
+```json
+{ "status": "PROGRESS" }
+```
+Los valores válidos son: `PENDING`, `PROGRESS`, `DONE`.
+
+**Reglas de negocio:**
+- El `total` se calcula automáticamente desde el precio del servicio al crear el pedido
+- Un usuario no puede tener más de un pedido en estado `PENDING` o `PROGRESS` para el mismo servicio → `409 Conflict`
+- El servicio debe estar activo (`isActive: true`) para poder contratar → `404 Not Found`
+
+---
+
+### Entregables — `/api/orders/:id/deliverables`
+
+| Método | Ruta | Descripción | Auth |
+|---|---|---|---|
+| POST | `/api/orders/:id/deliverables` | Añadir entregable a un pedido | Admin |
+| GET | `/api/orders/:id/deliverables` | Listar entregables de un pedido | Admin o propietario |
+
+**Body POST:**
+```json
+{
+  "label": "Informe SEO final",
+  "url": "https://drive.google.com/..."
+}
+```
+
+---
+
+### Usuarios — `/api/users`
+
+| Método | Ruta | Descripción | Auth |
+|---|---|---|---|
+| GET | `/api/users` | Lista todos los usuarios | Admin |
+| GET | `/api/users/:id` | Detalle de un usuario | Admin o propio usuario |
+| PUT | `/api/users/:id` | Actualizar datos y perfil | Admin o propio usuario |
+
+**Body PUT (todos los campos opcionales):**
+```json
+{
+  "email": "nuevo@email.com",
+  "fullName": "Ada Lovelace",
+  "phone": "+34 600 000 000",
+  "companyName": "Mi Empresa SL",
+  "role": "ADMIN"
+}
+```
+
+**Reglas de negocio:**
+- Un usuario no puede cambiar su propio `role` → `403 Forbidden`
+- Los campos `fullName`, `phone` y `companyName` se guardan en la tabla `Profile` (upsert automático)
+
+---
+
 ### Rutas protegidas
 
 Las rutas que requieren autenticación esperan el token en la cabecera:
@@ -218,6 +321,44 @@ Authorization: Bearer <token>
 ```
 
 Las rutas de administrador además verifican `role === 'ADMIN'` → `403 Forbidden` si no cumple.
+
+**Matriz de autorización por recurso:**
+
+| Ruta | Público | USER | ADMIN |
+|---|---|---|---|
+| GET `/api/services` | ✅ | ✅ | ✅ |
+| POST / PUT / DELETE `/api/services` | ❌ | ❌ | ✅ |
+| POST `/api/orders` | ❌ | ✅ | ✅ |
+| GET `/api/orders` | ❌ | Solo propios | Todos |
+| GET `/api/orders/:id` | ❌ | Solo propietario | ✅ |
+| PUT `/api/orders/:id/status` | ❌ | ❌ | ✅ |
+| POST `/api/orders/:id/deliverables` | ❌ | ❌ | ✅ |
+| GET `/api/orders/:id/deliverables` | ❌ | Solo propietario | ✅ |
+| GET `/api/users` | ❌ | ❌ | ✅ |
+| GET `/api/users/:id` | ❌ | Solo propio | ✅ |
+| PUT `/api/users/:id` | ❌ | Solo propio (sin `role`) | ✅ |
+
+**Soft delete — patrón aplicado en `Service`:**
+
+El campo `isActive Boolean @default(true)` en el modelo `Service` permite desactivar registros sin borrarlos físicamente. Todas las consultas públicas filtran por `isActive: true`. Un servicio con `isActive: false` no aparece en el catálogo ni puede ser contratado.
+
+```js
+// DELETE → no ejecuta prisma.service.delete()
+await prisma.service.update({ where: { id }, data: { isActive: false } })
+
+// GET público → siempre filtra activos
+prisma.service.findMany({ where: { isActive: true } })
+```
+
+**Control de propiedad (ownership) en pedidos y entregables:**
+
+Las rutas `GET /api/orders/:id` y `GET /api/orders/:id/deliverables` son accesibles tanto por el ADMIN como por el propietario del pedido. La verificación se realiza en el controlador comparando `order.userId` con `req.user.id`:
+
+```js
+if (req.user.role !== 'ADMIN' && order.userId !== req.user.id) {
+  return res.status(403).json({ error: 'Forbidden' })
+}
+```
 
 ---
 
@@ -261,14 +402,11 @@ function validate(schema) {
 }
 ```
 
-Los schemas de autenticación como ejemplo:
+El middleware se inyecta en la cadena de la ruta entre los middlewares de autenticación y el controlador:
 
 ```js
-// src/features/auth/auth.schema.js
-const RegisterSchema = z.object({
-  email: z.string().email({ message: 'A valid email is required' }),
-  password: z.string().min(8, { message: 'Password must be at least 8 characters' }),
-})
+router.post('/', authenticate, isAdmin, validate(CreateServiceSchema), createService)
+router.post('/login', loginLimiter, validate(LoginSchema), login)
 ```
 
 Si la validación falla, la respuesta incluye el primer error como `error` y el listado completo en `details`:
@@ -278,6 +416,52 @@ Si la validación falla, la respuesta incluye el primer error como `error` y el 
   "error": "A valid email is required",
   "details": ["A valid email is required"]
 }
+```
+
+**Schemas por recurso:**
+
+```js
+// src/features/auth/auth.schema.js
+const RegisterSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+})
+const LoginSchema = z.object({
+  email: z.string().min(1),
+  password: z.string().min(1),
+})
+
+// src/features/services/services.schema.js
+const CreateServiceSchema = z.object({
+  name: z.string().min(1),
+  description: z.string().min(1),
+  price: z.number().positive(),
+  category: z.string().min(1),
+  formConfig: z.record(z.any()).default({}),
+})
+const UpdateServiceSchema = CreateServiceSchema.partial()  // todos los campos opcionales
+
+// src/features/orders/orders.schema.js
+const CreateOrderSchema = z.object({
+  serviceId: z.string().min(1),
+  configData: z.record(z.any()).default({}),
+})
+const UpdateOrderStatusSchema = z.object({
+  status: z.enum(['PENDING', 'PROGRESS', 'DONE']),
+})
+const CreateDeliverableSchema = z.object({
+  label: z.string().min(1),
+  url: z.string().url(),
+})
+
+// src/features/users/users.schema.js
+const UpdateUserSchema = z.object({
+  email: z.string().email().optional(),
+  role: z.enum(['USER', 'ADMIN']).optional(),
+  fullName: z.string().optional(),
+  phone: z.string().optional(),
+  companyName: z.string().optional(),
+})
 ```
 
 ---

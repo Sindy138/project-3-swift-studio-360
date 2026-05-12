@@ -3,6 +3,9 @@ const cors = require('cors')
 const morgan = require('morgan')
 const helmet = require('helmet')
 const authRoutes = require('./features/auth/auth.routes')
+const usersRoutes = require('./features/users/users.routes')
+const servicesRoutes = require('./features/services/services.routes')
+const ordersRoutes = require('./features/orders/orders.routes')
 const { errorHandler } = require('./middlewares/error.middleware')
 
 const app = express()
@@ -17,6 +20,9 @@ app.use(cors({
 app.use(express.json())
 
 app.use('/api/auth', authRoutes)
+app.use('/api/users', usersRoutes)
+app.use('/api/services', servicesRoutes)
+app.use('/api/orders', ordersRoutes)
 
 app.use(errorHandler)
 
