@@ -1,19 +1,13 @@
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const { z } = require('zod')
 
-function validateRegister(data) {
-  if (!data.email || !EMAIL_REGEX.test(data.email)) {
-    return 'A valid email is required'
-  }
-  if (!data.password || data.password.length < 8) {
-    return 'Password must be at least 8 characters'
-  }
-  return null
-}
+const RegisterSchema = z.object({
+  email: z.string().email({ message: 'A valid email is required' }),
+  password: z.string().min(8, { message: 'Password must be at least 8 characters' }),
+})
 
-function validateLogin(data) {
-  if (!data.email) return 'Email is required'
-  if (!data.password) return 'Password is required'
-  return null
-}
+const LoginSchema = z.object({
+  email: z.string().min(1, { message: 'Email is required' }),
+  password: z.string().min(1, { message: 'Password is required' }),
+})
 
-module.exports = { validateRegister, validateLogin }
+module.exports = { RegisterSchema, LoginSchema }

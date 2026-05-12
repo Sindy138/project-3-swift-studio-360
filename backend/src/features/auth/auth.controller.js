@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const prisma = require('../../lib/prisma')
-const { validateRegister, validateLogin } = require('./auth.schema')
 
 const signToken = (user) =>
   jwt.sign(
@@ -11,9 +10,6 @@ const signToken = (user) =>
   )
 
 async function register(req, res) {
-  const error = validateRegister(req.body)
-  if (error) return res.status(400).json({ error })
-
   const { email, password } = req.body
 
   const existing = await prisma.user.findUnique({ where: { email } })
@@ -30,9 +26,6 @@ async function register(req, res) {
 }
 
 async function login(req, res) {
-  const error = validateLogin(req.body)
-  if (error) return res.status(400).json({ error })
-
   const { email, password } = req.body
 
   const user = await prisma.user.findUnique({ where: { email } })
