@@ -29,3 +29,15 @@ Este comando crea la carpeta /prisma y el archivo .env donde configurarás la co
 Bash
 
 `npx prisma init`
+
+3. Regenerar el cliente:
+
+`npx prisma generate`
+
+4. Crear la DB y aplicar el schema:
+
+`npx prisma migrate dev --name init`
+
+5. Lanzar el seed:
+
+`npx prisma db seed`
