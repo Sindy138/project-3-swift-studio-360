@@ -1,6 +1,7 @@
 const prisma = require('../../lib/prisma')
+const asyncHandler = require('../../lib/asyncHandler')
 
-async function createOrder(req, res) {
+const createOrder = asyncHandler(async (req, res) => {
   const { serviceId, configData } = req.body
   const userId = req.user.id
 
@@ -24,9 +25,9 @@ async function createOrder(req, res) {
     include: { service: { select: { name: true, category: true, price: true } } },
   })
   return res.status(201).json(order)
-}
+})
 
-async function listOrders(req, res) {
+const listOrders = asyncHandler(async (req, res) => {
   const where = req.user.role === 'ADMIN' ? {} : { userId: req.user.id }
   const orders = await prisma.order.findMany({
     where,
@@ -34,9 +35,9 @@ async function listOrders(req, res) {
     orderBy: { createdAt: 'desc' },
   })
   return res.json(orders)
-}
+})
 
-async function getOrder(req, res) {
+const getOrder = asyncHandler(async (req, res) => {
   const order = await prisma.order.findUnique({
     where: { id: req.params.id },
     include: {
@@ -49,9 +50,9 @@ async function getOrder(req, res) {
     return res.status(403).json({ error: 'Forbidden' })
   }
   return res.json(order)
-}
+})
 
-async function updateOrderStatus(req, res) {
+const updateOrderStatus = asyncHandler(async (req, res) => {
   const order = await prisma.order.findUnique({ where: { id: req.params.id } })
   if (!order) return res.status(404).json({ error: 'Order not found' })
 
@@ -60,9 +61,9 @@ async function updateOrderStatus(req, res) {
     data: { status: req.body.status },
   })
   return res.json(updated)
-}
+})
 
-async function addDeliverable(req, res) {
+const addDeliverable = asyncHandler(async (req, res) => {
   const order = await prisma.order.findUnique({ where: { id: req.params.id } })
   if (!order) return res.status(404).json({ error: 'Order not found' })
 
@@ -70,9 +71,9 @@ async function addDeliverable(req, res) {
     data: { ...req.body, orderId: req.params.id },
   })
   return res.status(201).json(deliverable)
-}
+})
 
-async function listDeliverables(req, res) {
+const listDeliverables = asyncHandler(async (req, res) => {
   const order = await prisma.order.findUnique({ where: { id: req.params.id } })
   if (!order) return res.status(404).json({ error: 'Order not found' })
   if (req.user.role !== 'ADMIN' && order.userId !== req.user.id) {
@@ -84,7 +85,7 @@ async function listDeliverables(req, res) {
     orderBy: { createdAt: 'asc' },
   })
   return res.json(deliverables)
-}
+})
 
 module.exports = {
   createOrder,

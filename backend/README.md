@@ -107,7 +107,8 @@ backend/
 │   │   ├── validate.middleware.js    # Validación de req.body con schema Zod
 │   │   └── error.middleware.js       # Manejador centralizado de errores
 │   ├── lib/
-│   │   └── prisma.js                 # Instancia única del PrismaClient
+│   │   ├── prisma.js                 # Instancia única del PrismaClient
+│   │   └── asyncHandler.js          # Wrapper que propaga errores async al errorHandler
 │   ├── app.js                        # Configuración de Express (middlewares + rutas)
 │   └── server.js                     # Arranque del servidor
 ├── .env                              # Variables de entorno (no subir a git)
@@ -463,6 +464,29 @@ const UpdateUserSchema = z.object({
   companyName: z.string().optional(),
 })
 ```
+
+---
+
+### Manejo de errores centralizado
+
+Todos los controladores están envueltos con `asyncHandler` (`src/lib/asyncHandler.js`), que captura cualquier excepción async y la pasa a `next(err)` sin necesidad de try/catch manual:
+
+```js
+const asyncHandler = (fn) => (req, res, next) =>
+  Promise.resolve(fn(req, res, next)).catch(next)
+```
+
+El `errorHandler` (`src/middlewares/error.middleware.js`) recibe todos los errores y devuelve siempre JSON con el código HTTP apropiado:
+
+| Tipo de error | Condición | HTTP |
+|---|---|---|
+| Zod (validación) | body inválido — capturado en `validate` antes de llegar aquí | `400` |
+| `SyntaxError` + `body` | JSON malformado en la petición | `400` |
+| Prisma `P2002` | Violación de unique constraint (ej. email duplicado) | `409` |
+| Prisma `P2025` | `update`/`delete` sobre un ID que no existe en BD | `404` |
+| Prisma `P2003` | FK constraint — entidad relacionada no existe | `409` |
+| JWT inválido / expirado | Capturado en `authenticate` antes de llegar aquí | `401` |
+| Cualquier otro | Error inesperado — se registra con `console.error` | `500` |
 
 ---
 

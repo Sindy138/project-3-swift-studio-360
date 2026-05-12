@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const prisma = require('../../lib/prisma')
+const asyncHandler = require('../../lib/asyncHandler')
 
 const signToken = (user) =>
   jwt.sign(
@@ -9,7 +10,7 @@ const signToken = (user) =>
     { expiresIn: '7d' }
   )
 
-async function register(req, res) {
+const register = asyncHandler(async (req, res) => {
   const { email, password } = req.body
 
   const existing = await prisma.user.findUnique({ where: { email } })
@@ -19,13 +20,13 @@ async function register(req, res) {
 
   const user = await prisma.user.create({
     data: { email, password: hashed },
-    select: { id: true, email: true, role: true, createdAt: true }
+    select: { id: true, email: true, role: true, createdAt: true },
   })
 
   return res.status(201).json({ user, token: signToken(user) })
-}
+})
 
-async function login(req, res) {
+const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body
 
   const user = await prisma.user.findUnique({ where: { email } })
@@ -37,6 +38,6 @@ async function login(req, res) {
   const { password: _, ...safeUser } = user
 
   return res.status(200).json({ user: safeUser, token: signToken(safeUser) })
-}
+})
 
 module.exports = { register, login }

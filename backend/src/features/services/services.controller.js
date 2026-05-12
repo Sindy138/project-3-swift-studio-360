@@ -1,27 +1,28 @@
 const prisma = require('../../lib/prisma')
+const asyncHandler = require('../../lib/asyncHandler')
 
-async function listServices(req, res) {
+const listServices = asyncHandler(async (req, res) => {
   const services = await prisma.service.findMany({
     where: { isActive: true },
     orderBy: { createdAt: 'desc' },
   })
   return res.json(services)
-}
+})
 
-async function getService(req, res) {
+const getService = asyncHandler(async (req, res) => {
   const service = await prisma.service.findFirst({
     where: { id: req.params.id, isActive: true },
   })
   if (!service) return res.status(404).json({ error: 'Service not found' })
   return res.json(service)
-}
+})
 
-async function createService(req, res) {
+const createService = asyncHandler(async (req, res) => {
   const service = await prisma.service.create({ data: req.body })
   return res.status(201).json(service)
-}
+})
 
-async function updateService(req, res) {
+const updateService = asyncHandler(async (req, res) => {
   const service = await prisma.service.findFirst({
     where: { id: req.params.id, isActive: true },
   })
@@ -32,9 +33,9 @@ async function updateService(req, res) {
     data: req.body,
   })
   return res.json(updated)
-}
+})
 
-async function deleteService(req, res) {
+const deleteService = asyncHandler(async (req, res) => {
   const service = await prisma.service.findFirst({
     where: { id: req.params.id, isActive: true },
   })
@@ -45,6 +46,6 @@ async function deleteService(req, res) {
     data: { isActive: false },
   })
   return res.status(204).send()
-}
+})
 
 module.exports = { listServices, getService, createService, updateService, deleteService }

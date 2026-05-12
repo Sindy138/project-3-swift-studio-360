@@ -429,3 +429,55 @@ Veo lo que falta. Los endpoints del CRUD ya están en el README (los añadí en 
    - Matriz de autorización completa (quién puede qué)
    - Explicación del patrón soft delete con el código de Prisma real
    - Explicación del patrón de ownership con el código del controlador
+
+#### FASE 5
+
+Todo implementado. Esto es lo que hace cada pieza:
+
+Archivo nuevo — asyncHandler.js
+
+Una línea que envuelve cualquier función async y, si lanza una excepción, la pasa a next(err) en lugar de dejar caer el servidor:
+
+const asyncHandler = (fn) => (req, res, next) =>
+Promise.resolve(fn(req, res, next)).catch(next)
+Sin esto, un await prisma.something() que falla lanzaba un UnhandledPromiseRejection y Express no llegaba al errorHandler.
+
+Actualizado — error.middleware.js
+
+Ahora distingue tres errores específicos de Prisma antes de llegar al 500 genérico:
+
+Código Prisma Situación HTTP devuelto
+P2002 Violación de unique constraint (email duplicado) 409 con el campo afectado
+P2025 update/delete sobre un ID que no existe 404
+P2003 FK constraint — relación referenciada no existe 409
+SyntaxError + body JSON malformado en el body 400
+Cualquier otro Error inesperado 500 + console.error
+Actualizados — los 4 controladores
+
+Cada función ahora está envuelta con asyncHandler(async (req, res) => { ... }). El código interno no cambia — solo desaparece la necesidad de try/catch manual porque el wrapper lo hace por todos.
+
+Limpiado — validate.middleware.js
+
+Eliminado el const { ZodError } = require('zod') que estaba declarado pero nunca usado (usamos safeParse, no lanzamos excepciones Zod).
+
+#### auditoría segun briefing
+
+Validar datos de entrada en todos los endpoints POST/PUT:
+
+Campos requeridos presentes → Zod en todos los schemas ✅
+Tipos de dato correctos → Zod (.string(), .number(), .url(), .enum()) ✅
+Email con formato válido → z.string().email() en auth y users ✅
+Precio no negativo en Services → z.number().positive() ✅
+middleware/errorHandler.js que captura todos los errores:
+
+400 datos inválidos → validate.middleware.js (Zod) + SyntaxError de JSON malformado ✅
+401 no autenticado → authenticate en auth.middleware.js ✅
+403 no autorizado → isAdmin + checks de ownership en controladores ✅
+404 recurso no encontrado → controladores + Prisma P2025 en errorHandler ✅
+409 conflicto → controladores + Prisma P2002/P2003 en errorHandler ✅
+500 error interno → fallback del errorHandler ✅
+Lo que se añadió en esta sesión para cerrar los huecos:
+
+asyncHandler — sin esto los errores de Prisma no llegaban al errorHandler y el servidor podía crashear en silencio
+Prisma error codes (P2002, P2025, P2003) en el errorHandler
+Captura de JSON malformado
