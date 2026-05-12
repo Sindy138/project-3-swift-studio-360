@@ -111,10 +111,13 @@ backend/
 │   │   └── asyncHandler.js          # Wrapper que propaga errores async al errorHandler
 │   ├── app.js                        # Configuración de Express (middlewares + rutas)
 │   └── server.js                     # Arranque del servidor
+├── tests/
+│   └── api.test.js                   # 10 tests de integración con Vitest + Supertest
 ├── .env                              # Variables de entorno (no subir a git)
 ├── .env.example                      # Plantilla de variables de entorno
 ├── .gitignore
 ├── package.json
+├── vitest.config.mjs                 # Configuración de Vitest (globals, timeout, pool)
 └── prisma.config.ts                  # Configuración de Prisma v7 (URL, migraciones, seed)
 ```
 
@@ -562,6 +565,34 @@ Activado globalmente en `app.js`:
 ```js
 app.use(morgan('dev'))
 ```
+
+---
+
+## Tests
+
+Suite de **10 tests de integración** en `tests/api.test.js` con Vitest + Supertest. Los tests golpean la base de datos real — requieren que la base de datos esté en marcha y que `DATABASE_URL` esté configurado en `.env`.
+
+```bash
+npm test
+```
+
+| # | Descripción | Ruta | Verifica |
+|---|---|---|---|
+| 1 | Registro exitoso | `POST /api/auth/register` | `201` + token + role `USER` |
+| 2 | Email duplicado | `POST /api/auth/register` | `409` |
+| 3 | Login correcto | `POST /api/auth/login` | `200` + token sin campo `password` |
+| 4 | Contraseña incorrecta | `POST /api/auth/login` | `401` |
+| 5 | Listado público de servicios | `GET /api/services` | `200` + array + todos `isActive: true` |
+| 6 | Admin crea servicio | `POST /api/services` | `201` con token admin |
+| 7 | Usuario normal bloqueado | `POST /api/services` | `403` con token user |
+| 8 | Usuario crea pedido | `POST /api/orders` | `201` + `userId` correcto + `total` calculado |
+| 9 | Ownership en listado | `GET /api/orders` | Todos los pedidos pertenecen al usuario autenticado |
+| 10 | Cambio de estado por rol | `PUT /api/orders/:id/status` | User → `403`; Admin → `200` con estado actualizado |
+
+**Estrategia de aislamiento:**
+- Cada ejecución usa emails con timestamp (`user_<ts>@swift-test.com`) para evitar colisiones con datos existentes.
+- `beforeAll` crea los usuarios de prueba y un servicio auxiliar directamente en BD.
+- `afterAll` elimina todos los datos generados por los tests (pedidos, servicios, perfiles, usuarios).
 
 ---
 

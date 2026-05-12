@@ -481,3 +481,23 @@ Lo que se añadió en esta sesión para cerrar los huecos:
 asyncHandler — sin esto los errores de Prisma no llegaban al errorHandler y el servidor podía crashear en silencio
 Prisma error codes (P2002, P2025, P2003) en el errorHandler
 Captura de JSON malformado
+
+#### Fase 6 completa.
+
+Esto es lo que se creó y por qué cada decisión:
+
+vitest.config.mjs — .mjs fuerza ESM sin importar el "type": "commonjs" del proyecto. Cuatro ajustes clave:
+
+globals: true — describe, it, expect, beforeAll, afterAll disponibles sin imports en los tests
+environment: 'node' — no DOM, entorno puro de Node
+testTimeout: 15000 — las operaciones de BD pueden tardar, el default de 5s es insuficiente
+pool: 'forks' — cada archivo de tests corre en su propio proceso, evita colisiones de estado
+tests/api.test.js — los 10 tests exactos del brief, escritos con require (CJS, igual que el resto del proyecto):
+
+beforeAll crea dos usuarios (uno normal, uno al que se le sube el rol a ADMIN directamente en BD con prisma) y un servicio auxiliar para los tests de pedidos
+Los tests del 8 al 10 comparten orderId — el test 8 lo crea vía API y los tests 9 y 10 lo consumen
+afterAll limpia todo lo generado: pedidos, servicios (soft-delete), perfiles y usuarios
+Para ejecutarlo, con la base de datos activa:
+
+npm test
+Si ves 429 en los tests de login, el rate limiter se ha activado (máximo 10 intentos por IP cada 15 minutos). Espera un momento y vuelve a ejecutar.
