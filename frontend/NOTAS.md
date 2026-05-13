@@ -113,3 +113,15 @@ frontend/src/App.jsx Reescrito — BrowserRouter + AuthProvider + Routes + Prote
 frontend/.env Nuevo — VITE_API_URL=http://localhost:3000
 frontend/src/components/home/styles/Home.css Nuevo — faltaba, lo requería Home.jsx
 Todas las rutas futuras están ya comentadas en App.jsx — solo hay que descomentar a medida que creamos cada página. ¿Seguimos con el Bloque 2 (Login + Register)?
+
+#### FASE 2
+
+Bloque 2 completado.
+
+Lo que se ha creado:
+
+Archivo Qué hace
+frontend/src/pages/Login.jsx Formulario de login — POST /api/auth/login, guarda token, redirige a /dashboard
+frontend/src/pages/Register.jsx Formulario de registro — validación en cliente (email, longitud, confirmación), POST /api/auth/register
+frontend/src/pages/Auth.module.css CSS compartido por ambas páginas — card centrada, gradiente de marca, responsive
+Ambas páginas tienen estados de loading (botón deshabilitado + texto cambiante) y error (caja roja con el mensaje de la API). Se enlazan entre sí con Link.
