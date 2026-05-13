@@ -1,0 +1,135 @@
+/* ============================================
+   NAVBAR STYLES
+   ============================================ */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.65);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 1rem 0;
+  height: auto;
+  min-height: fit-content;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  font-weight: 700;
+  flex-shrink: 0;
+  height: 40px;
+}
+
+.logo-image {
+  width: clamp(125px, calc(125px + 5vw), 255px);
+  height: auto;
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+.navbar-menu {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.navbar-menu li {
+  margin: 0;
+}
+
+.navbar-menu a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.navbar-menu a:hover {
+  background: linear-gradient(90deg, #ffae8e, #ff7da2, #aa73fa);
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+
+  transition: all 0.3s ease;
+}
+
+.btn-dashboard {
+  background: linear-gradient(90deg, #ffae8e, #ff7da2, #aa73fa) !important;
+  color: white !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: var(--radius-md);
+  transition: transform 0.3s ease;
+}
+
+/*
+.btn-dashboard:hover {
+  transform: translateY(-2px);
+  color: white !important;
+}
+*/
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .navbar-container {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .navbar-menu {
+    gap: 1rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .navbar-menu a {
+    display: inline-block;
+    padding: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-container {
+    padding: 0.5rem;
+  }
+
+  .navbar-logo {
+    font-size: 1.2rem;
+  }
+
+  .navbar-menu {
+    gap: 0.5rem;
+  }
+
+  .navbar-menu a {
+    font-size: 0.9rem;
+  }
+
+  .btn-dashboard {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.9rem;
+  }
+}

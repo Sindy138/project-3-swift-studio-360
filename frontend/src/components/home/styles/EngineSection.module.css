@@ -1,0 +1,215 @@
+/* ============================================
+   ENGINE SECTION STYLES
+   ============================================ */
+
+.engine-section {
+  padding: var(--spacing-3xl) 0;
+  background: linear-gradient(
+    135deg,
+    var(--color-dark) 0%,
+    var(--color-dark) 50%,
+    rgba(44, 62, 80, 0.95) 100%
+  );
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background pattern (subtle) */
+.engine-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+.engine-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+  position: relative;
+  z-index: 1;
+}
+
+/* Header */
+.engine-section .section-header {
+  color: white;
+}
+
+.engine-section .section-title {
+  color: white;
+}
+
+.engine-section .section-title::after {
+  background: linear-gradient(
+    90deg,
+    var(--color-primary),
+    var(--color-secondary)
+  );
+}
+
+.engine-section .section-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.engine-section .section-description {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Advantages Grid */
+.advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-2xl);
+  margin-bottom: var(--spacing-3xl);
+}
+
+.advantage-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: var(--spacing-2xl);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all var(--transition-normal);
+  text-align: center;
+}
+
+.advantage-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-4px);
+}
+
+.advantage-icon {
+  font-size: 48px;
+  margin-bottom: var(--spacing-md);
+  display: block;
+  transition: transform var(--transition-normal);
+}
+
+.advantage-card:hover .advantage-icon {
+  transform: scale(1.2);
+}
+
+.advantage-title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+}
+
+.advantage-description {
+  font-size: var(--font-size-base);
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+/* Comparison Section */
+.comparison-section {
+  margin-top: var(--spacing-3xl);
+  padding: var(--spacing-2xl);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.comparison-title {
+  text-align: center;
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.comparison-table {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-2xl);
+}
+
+.comparison-column {
+  padding: var(--spacing-2xl);
+  border-radius: var(--radius-lg);
+}
+
+.comparison-column h4 {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.traditional {
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+}
+
+.modern {
+  background: rgba(78, 205, 196, 0.1);
+  border: 1px solid rgba(78, 205, 196, 0.3);
+}
+
+.comparison-column ul {
+  list-style: none;
+}
+
+.comparison-column li {
+  padding: var(--spacing-sm) 0;
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Engine CTA Section */
+.engine-cta-section {
+  text-align: center;
+  margin-top: var(--spacing-3xl);
+  padding: var(--spacing-2xl);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 107, 0.15),
+    rgba(78, 205, 196, 0.15)
+  );
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.engine-cta-section .btn {
+  margin-bottom: var(--spacing-md);
+}
+
+.cta-subtitle {
+  font-size: var(--font-size-base);
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: var(--spacing-md);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  .advantages-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .comparison-table {
+    grid-template-columns: 1fr;
+  }
+
+  .advantage-card,
+  .comparison-column {
+    padding: var(--spacing-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .advantages-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .engine-cta-section .btn {
+    width: 100%;
+  }
+}

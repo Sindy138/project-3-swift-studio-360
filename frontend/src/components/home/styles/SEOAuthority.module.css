@@ -1,0 +1,159 @@
+/* ============================================
+   SEO AUTHORITY SECTION STYLES
+   ============================================ */
+
+.seo-authority-section {
+  padding: var(--spacing-3xl) 0;
+  background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
+}
+
+.authority-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+/* Key Stats Grid */
+.key-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-2xl);
+  margin-bottom: var(--spacing-3xl);
+}
+
+.stat-card {
+  background: white;
+  padding: var(--spacing-2xl);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  border-top: 4px solid var(--color-primary);
+  transition: all var(--transition-normal);
+}
+
+.stat-card:nth-child(2) {
+  border-top-color: var(--color-secondary);
+}
+
+.stat-card:nth-child(3) {
+  border-top-color: var(--color-accent);
+}
+
+.stat-card:nth-child(4) {
+  border-top-color: #a8e6cf;
+}
+
+.stat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+.stat-metric {
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.stat-card:nth-child(2) .stat-metric {
+  color: var(--color-secondary);
+}
+
+.stat-card:nth-child(3) .stat-metric {
+  color: var(--color-accent);
+}
+
+.stat-card:nth-child(4) .stat-metric {
+  color: #a8e6cf;
+}
+
+.stat-label {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-light);
+  font-weight: 600;
+}
+
+/* Authority Content */
+.authority-content {
+  background: white;
+  padding: var(--spacing-2xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--spacing-3xl);
+  border-left: 4px solid var(--color-primary);
+}
+
+.authority-text {
+  max-width: 800px;
+}
+
+.authority-paragraph {
+  font-size: var(--font-size-lg);
+  line-height: 1.8;
+  color: var(--color-text);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Authority CTA Section */
+.authority-cta-section {
+  text-align: center;
+  padding: var(--spacing-2xl);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 107, 0.1),
+    rgba(78, 205, 196, 0.1)
+  );
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-primary);
+}
+
+.authority-cta-section h3 {
+  font-size: var(--font-size-xl);
+  color: var(--color-dark);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Structured Data (oculto pero importante para SEO) */
+script[type="application/ld+json"] {
+  display: none;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  .key-stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .stat-metric {
+    font-size: var(--font-size-2xl);
+  }
+
+  .authority-content {
+    padding: var(--spacing-lg);
+  }
+
+  .authority-paragraph {
+    font-size: var(--font-size-base);
+  }
+}
+
+@media (max-width: 480px) {
+  .key-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+  }
+
+  .stat-card {
+    padding: var(--spacing-lg);
+  }
+
+  .stat-metric {
+    font-size: var(--font-size-xl);
+  }
+
+  .authority-cta-section .btn {
+    width: 100%;
+  }
+}
