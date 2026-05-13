@@ -501,3 +501,35 @@ Para ejecutarlo, con la base de datos activa:
 
 npm test
 Si ves 429 en los tests de login, el rate limiter se ha activado (máximo 10 intentos por IP cada 15 minutos). Espera un momento y vuelve a ejecutar.
+
+#### AUDITORIA
+
+Auditoría — Swift Studio 360 Backend
+Requisitos obligatorios — toma_de_requisitos.md
+Requisito Estado Detalle
+Express.js framework HTTP ✅ Express 5.2.1 en app.js
+PostgreSQL base de datos ✅ Configurado en prisma.config.ts vía DATABASE_URL
+API REST funcional — CRUD completo ✅ 4 recursos: auth, services, orders (+deliverables), users
+Postman — colección exportada y documentada ❌ No existe ningún archivo .json de Postman en el repo
+Prisma ORM ✅ Prisma 7.8, schema con 5 modelos, migraciones y seed
+JWT + bcryptjs ✅ Tokens 7d firmados con JWT_SECRET, hash con 10 rondas
+Vitest + Supertest — tests de integración ✅ 10 tests en tests/api.test.js
+Requisitos de entrega — toma_de_requisitos.md
+Requisito Estado Detalle
+README.md con instrucciones de instalación ✅ Instalación, variables, scripts, jerarquía, endpoints, modelo de datos
+.env.example con todas las variables ✅ DATABASE_URL, JWT_SECRET, PORT, CORS_ORIGIN
+Colección Postman .json en raíz o /postman ❌ No existe
+Proyecto arranca con npm install + .env + npm run dev ✅ Script dev funcional
+Requisitos del BRIEF
+Requisito Estado Detalle
+≥ 4 recursos en la API ✅ Users, Services, Orders, Deliverables
+Autenticación JWT ✅ Register + Login + middleware authenticate
+Roles de usuario ✅ USER / ADMIN con middleware isAdmin
+Validaciones de entrada ✅ Zod en todos los POST/PUT
+Manejo de errores centralizado ✅ errorHandler con Prisma codes, SyntaxError, 400–500
+≥ 8 tests de integración ✅ 10 tests cubriendo auth, services, orders
+Lógica de negocio implementada ✅ Pedido duplicado → 409, soft delete en services
+Resultado
+El único requisito obligatorio pendiente es la colección de Postman. Todo lo demás está implementado y cumple los requisitos.
+
+La colección de Postman debe cubrir todos los endpoints documentados en el README y exportarse como .json en una carpeta /postman o en la raíz del proyecto. Eso no se puede generar desde código — tienes que hacerlo tú desde Postman con las peticiones que ya has probado.
