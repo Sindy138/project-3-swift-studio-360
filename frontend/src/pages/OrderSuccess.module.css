@@ -1,0 +1,89 @@
+.page {
+  min-height: calc(100vh - 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--space-4);
+  background: var(--color-neutral-50);
+}
+
+.card {
+  text-align: center;
+  max-width: 480px;
+  width: 100%;
+  background: #fff;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-12) var(--space-8);
+  box-shadow: var(--shadow-lg);
+}
+
+.icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffae8e, #aa73fa);
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-6);
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--color-neutral-900);
+  margin-bottom: var(--space-4);
+}
+
+.message {
+  font-size: 1rem;
+  color: var(--color-neutral-500);
+  line-height: 1.7;
+  margin-bottom: var(--space-8);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.btnPrimary {
+  display: block;
+  padding: var(--space-4);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(90deg, #ffae8e, #ff7da2, #aa73fa);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.btnPrimary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  color: #fff;
+}
+
+.btnSecondary {
+  display: block;
+  padding: var(--space-4);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-neutral-600);
+  background: #fff;
+  border: 1.5px solid var(--color-neutral-300);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.btnSecondary:hover {
+  border-color: #aa73fa;
+  color: #aa73fa;
+}
