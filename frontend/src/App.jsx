@@ -11,9 +11,9 @@ import Checkout from './pages/Checkout'
 import OrderSuccess from './pages/OrderSuccess'
 import Login from './pages/Login'
 import Register from './pages/Register'
-// import Dashboard from './pages/Dashboard'
-// import OrderDetail from './pages/OrderDetail'
-// import Profile from './pages/Profile'
+import Dashboard from './pages/Dashboard'
+import OrderDetail from './pages/OrderDetail'
+import Profile from './pages/Profile'
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth()
@@ -41,9 +41,9 @@ const AppRoutes = () => {
         <Route path="/gracias" element={<ProtectedRoute><OrderSuccess /></ProtectedRoute>} />
 
         {/* Área de cliente (protegida) */}
-        {/* <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} /> */}
-        {/* <Route path="/dashboard/pedido/:id" element={<ProtectedRoute><OrderDetail /></ProtectedRoute>} /> */}
-        {/* <Route path="/perfil" element={<ProtectedRoute><Profile /></ProtectedRoute>} /> */}
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/dashboard/pedido/:id" element={<ProtectedRoute><OrderDetail /></ProtectedRoute>} />
+        <Route path="/perfil" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />

@@ -33,15 +33,25 @@ const ServiceGrid = ({ config = SECTOR_CONFIG.services }) => {
 
               {/* Card content */}
               <div className={styles["card-content"]}>
-                <div className={styles["service-icon"]}>{service.icon}</div>
+                <div className={styles["service-icon"]}>
+                  {service.image ? (
+                    <img
+                      src={service.image}
+                      alt={service.name}
+                      className={styles["service-image"]}
+                    />
+                  ) : (
+                    service.icon
+                  )}
+                </div>
                 <h3 className={styles["service-name"]}>{service.name}</h3>
-                <p className={styles["service-short"]}>
+                <span className={styles["service-short"]}>
                   {service.shortDescription}
-                </p>
+                </span>{" "}
+                <br />
                 <p className={styles["service-long"]}>
                   {service.longDescription}
                 </p>
-
                 {/* Features list */}
                 <ul className={styles["service-features"]}>
                   {service.features.map((feature, idx) => (
@@ -51,7 +61,6 @@ const ServiceGrid = ({ config = SECTOR_CONFIG.services }) => {
                     </li>
                   ))}
                 </ul>
-
                 {/* CTA Button */}
                 <a href={service.link} className={styles["service-cta"]}>
                   {service.ctaText}

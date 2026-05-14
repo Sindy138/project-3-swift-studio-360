@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import SECTOR_CONFIG from "../../config/content";
 import styles from "./styles/HeroSection.module.css";
 
@@ -38,18 +39,18 @@ const HeroSection = ({ config = SECTOR_CONFIG.hero }) => {
 
           {/* CTA Buttons */}
           <div className={styles["hero-cta-group"]}>
-            <a
-              href={cta.primary.link}
+            <Link
+              to={cta.primary.link}
               className={`${styles.btn} ${styles["btn-primary"]} ${styles["btn-lg"]}`}
             >
               {cta.primary.text}
-            </a>
-            <a
-              href={cta.secondary.link}
+            </Link>
+            <Link
+              to={cta.secondary.link}
               className={`${styles.btn} ${styles["btn-secondary"]} ${styles["btn-lg"]}`}
             >
               {cta.secondary.text}
-            </a>
+            </Link>
           </div>
         </div>
       </div>

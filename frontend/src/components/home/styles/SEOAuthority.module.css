@@ -3,27 +3,27 @@
    ============================================ */
 
 .seo-authority-section {
-  padding: var(--spacing-3xl) 0;
+  padding: var(--space-10) 0;
   background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
 }
 
 .authority-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 var(--spacing-lg);
+  padding: 0 var(--space-8);
 }
 
 /* Key Stats Grid */
 .key-stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--spacing-2xl);
-  margin-bottom: var(--spacing-3xl);
+  gap: var(--space-8);
+  margin-bottom: var(--space-10);
 }
 
 .stat-card {
   background: white;
-  padding: var(--spacing-2xl);
+  padding: var(--space-8);
   border-radius: var(--radius-lg);
   text-align: center;
   box-shadow: var(--shadow-md);
@@ -52,7 +52,7 @@
   font-size: var(--font-size-4xl);
   font-weight: 700;
   color: var(--color-primary);
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--space-6);
 }
 
 .stat-card:nth-child(2) .stat-metric {
@@ -76,10 +76,10 @@
 /* Authority Content */
 .authority-content {
   background: white;
-  padding: var(--spacing-2xl);
+  padding: var(--space-8);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
-  margin-bottom: var(--spacing-3xl);
+  margin-bottom: var(--space-10);
   border-left: 4px solid var(--color-primary);
 }
 
@@ -91,13 +91,13 @@
   font-size: var(--font-size-lg);
   line-height: 1.8;
   color: var(--color-text);
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--space-8);
 }
 
 /* Authority CTA Section */
 .authority-cta-section {
   text-align: center;
-  padding: var(--spacing-2xl);
+  padding: var(--space-8);
   background: linear-gradient(
     135deg,
     rgba(255, 107, 107, 0.1),
@@ -110,7 +110,7 @@
 .authority-cta-section h3 {
   font-size: var(--font-size-xl);
   color: var(--color-dark);
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--space-8);
 }
 
 /* Structured Data (oculto pero importante para SEO) */
@@ -131,7 +131,7 @@ script[type="application/ld+json"] {
   }
 
   .authority-content {
-    padding: var(--spacing-lg);
+    padding: var(--space-8);
   }
 
   .authority-paragraph {
@@ -142,11 +142,11 @@ script[type="application/ld+json"] {
 @media (max-width: 480px) {
   .key-stats-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-lg);
+    gap: var(--space-8);
   }
 
   .stat-card {
-    padding: var(--spacing-lg);
+    padding: var(--space-8);
   }
 
   .stat-metric {

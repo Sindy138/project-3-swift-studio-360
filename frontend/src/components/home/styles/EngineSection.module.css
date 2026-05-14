@@ -3,11 +3,11 @@
    ============================================ */
 
 .engine-section {
-  padding: var(--spacing-3xl) 0;
+  padding: var(--space-10) 0;
   background: linear-gradient(
     135deg,
-    var(--color-dark) 0%,
-    var(--color-dark) 50%,
+    var(--color-primary-800) 0%,
+    var(--color-primary-900) 50%,
     rgba(44, 62, 80, 0.95) 100%
   );
   color: white;
@@ -31,7 +31,7 @@
 .engine-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 var(--spacing-lg);
+  padding: 0 var(--space-8);
   position: relative;
   z-index: 1;
 }
@@ -65,14 +65,14 @@
 .advantages-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--spacing-2xl);
-  margin-bottom: var(--spacing-3xl);
+  gap: var(--space-8);
+  margin-bottom: var(--space-10);
 }
 
 .advantage-card {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
-  padding: var(--spacing-2xl);
+  padding: var(--space-8);
   border-radius: var(--radius-lg);
   border: 1px solid rgba(255, 255, 255, 0.2);
   transition: all var(--transition-normal);
@@ -87,7 +87,7 @@
 
 .advantage-icon {
   font-size: 48px;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--space-6);
   display: block;
   transition: transform var(--transition-normal);
 }
@@ -99,7 +99,7 @@
 .advantage-title {
   font-size: var(--font-size-lg);
   font-weight: 700;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--space-6);
 }
 
 .advantage-description {
@@ -110,8 +110,8 @@
 
 /* Comparison Section */
 .comparison-section {
-  margin-top: var(--spacing-3xl);
-  padding: var(--spacing-2xl);
+  margin-top: var(--space-10);
+  padding: var(--space-8);
   background: rgba(255, 255, 255, 0.05);
   border-radius: var(--radius-lg);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -120,24 +120,24 @@
 .comparison-title {
   text-align: center;
   font-size: var(--font-size-xl);
-  margin-bottom: var(--spacing-2xl);
+  margin-bottom: var(--space-8);
 }
 
 .comparison-table {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-2xl);
+  gap: var(--space-8);
 }
 
 .comparison-column {
-  padding: var(--spacing-2xl);
+  padding: var(--space-8);
   border-radius: var(--radius-lg);
 }
 
 .comparison-column h4 {
   font-size: var(--font-size-lg);
-  margin-bottom: var(--spacing-lg);
-  padding-bottom: var(--spacing-md);
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-6);
   border-bottom: 2px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -156,7 +156,7 @@
 }
 
 .comparison-column li {
-  padding: var(--spacing-sm) 0;
+  padding: var(--space-4) 0;
   font-size: var(--font-size-base);
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.9);
@@ -165,8 +165,8 @@
 /* Engine CTA Section */
 .engine-cta-section {
   text-align: center;
-  margin-top: var(--spacing-3xl);
-  padding: var(--spacing-2xl);
+  margin-top: var(--space-10);
+  padding: var(--space-8);
   background: linear-gradient(
     135deg,
     rgba(255, 107, 107, 0.15),
@@ -177,13 +177,13 @@
 }
 
 .engine-cta-section .btn {
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--space-6);
 }
 
 .cta-subtitle {
   font-size: var(--font-size-base);
   color: rgba(255, 255, 255, 0.8);
-  margin-top: var(--spacing-md);
+  margin-top: var(--space-6);
 }
 
 /* ============================================
@@ -200,7 +200,7 @@
 
   .advantage-card,
   .comparison-column {
-    padding: var(--spacing-lg);
+    padding: var(--space-8);
   }
 }
 

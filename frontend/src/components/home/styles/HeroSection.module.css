@@ -4,12 +4,12 @@
 
 .hero-section {
   position: relative;
-  min-height: 80vh;
+  min-height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: var(--spacing-3xl) 0;
+  padding: 3rem 7rem;
 }
 
 /* Background dinámico */
@@ -33,6 +33,8 @@
 }
 
 .hero-content {
+  max-width: 1100px;
+  margin: 0 auto;
   position: relative;
   z-index: 2;
   text-align: center;
@@ -40,18 +42,17 @@
 }
 
 .hero-headline {
-  font-size: var(--font-size-4xl);
-  margin-bottom: var(--spacing-md);
-  line-height: 1.2;
+  margin-bottom: var(--space-10);
+  line-height: calc(4rem + (0.5vw - 5.12px));
   animation: fadeInUp 0.8s ease forwards;
 }
 
 .hero-subheadline {
-  font-size: var(--font-size-xl);
   font-weight: 500;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--space-10);
   animation: fadeInUp 0.8s ease 0.2s forwards;
   opacity: 0;
+  font-size: var(--font-size-lg);
 }
 
 /*REGLA COMENTADA EN CONTENT.JS
@@ -77,16 +78,21 @@
 
 .hero-cta-group a {
   color: white;
-  background: linear-gradient(90deg, #ffae8e, #ff7da2, #aa73fa);
+  background: var(--color-base);
   padding: 0.8rem 1.5rem;
   border-radius: var(--radius-md);
   font-weight: 600;
 }
 
+.hero-cta-group a:hover {
+  color: white;
+  background: linear-gradient(90deg, #ffae8e, #ff7da2, #aa73fa);
+}
+
 /* Scroll Indicator */
 .scroll-indicator {
   position: absolute;
-  bottom: var(--spacing-xl);
+  bottom: 5rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
@@ -141,6 +147,7 @@
 
   .hero-headline {
     font-size: var(--font-size-2xl);
+    line-height: calc(1.2 + 0.5vw);
   }
 
   .hero-subheadline {

@@ -7,25 +7,26 @@ import styles from "./styles/SocialProof.module.css";
  * Componente con carrusel de testimonios
  * Datos vienen de config centralizada
  */
+const VISIBLE_COUNT = 3;
+
 const SocialProof = ({ config = SECTOR_CONFIG.socialProof }) => {
   const { title, subtitle, logos, testimonials } = config;
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const goToTestimonial = (index) => {
-    setCurrentTestimonial(index % testimonials.length);
-  };
+  const totalPositions = Math.max(1, testimonials.length - VISIBLE_COUNT + 1);
 
   const nextTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+    setCurrentIndex((prev) => (prev + 1) % totalPositions);
   };
 
   const prevTestimonial = () => {
-    setCurrentTestimonial(
-      (prev) => (prev - 1 + testimonials.length) % testimonials.length,
-    );
+    setCurrentIndex((prev) => (prev - 1 + totalPositions) % totalPositions);
   };
 
-  const current = testimonials[currentTestimonial];
+  const visibleTestimonials = testimonials.slice(
+    currentIndex,
+    currentIndex + VISIBLE_COUNT,
+  );
 
   return (
     <section className={styles["social-proof-section"]} id="social-proof">
@@ -38,7 +39,7 @@ const SocialProof = ({ config = SECTOR_CONFIG.socialProof }) => {
 
         {/* Logos Grid */}
         <div className={styles["logos-section"]}>
-          <h3 className={styles["logos-title"]}>Clientes y Partners</h3>
+          {/*<h3 className={styles["logos-title"]}>Clientes y Partners</h3>*/}
           <div className={styles["logos-grid"]}>
             {logos.map((logo) => (
               <div key={logo.id} className={styles["logo-item"]}>
@@ -55,17 +56,26 @@ const SocialProof = ({ config = SECTOR_CONFIG.socialProof }) => {
           </h3>
 
           <div className={styles["testimonial-carousel"]}>
-            <div className={styles["testimonial-card"]}>
-              <div className={styles.stars}>
-                {Array(current.rating).fill("⭐").join("")}
-              </div>
-              <blockquote className={styles["testimonial-quote"]}>
-                "{current.quote}"
-              </blockquote>
-              <div className={styles["testimonial-author"]}>
-                <p className={styles["author-name"]}>{current.author}</p>
-                <p className={styles["author-role"]}>{current.role}</p>
-              </div>
+            <div className={styles["testimonials-grid"]}>
+              {visibleTestimonials.map((testimonial) => (
+                <div
+                  key={testimonial.id}
+                  className={styles["testimonial-card"]}
+                >
+                  <div className={styles.stars}>
+                    {Array(testimonial.rating).fill("⭐").join("")}
+                  </div>
+                  <blockquote className={styles["testimonial-quote"]}>
+                    "{testimonial.quote}"
+                  </blockquote>
+                  <div className={styles["testimonial-author"]}>
+                    <p className={styles["author-name"]}>
+                      {testimonial.author}
+                    </p>
+                    <p className={styles["author-role"]}>{testimonial.role}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -78,17 +88,6 @@ const SocialProof = ({ config = SECTOR_CONFIG.socialProof }) => {
             >
               ←
             </button>
-
-            <div className={styles["carousel-dots"]}>
-              {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  className={`${styles.dot} ${index === currentTestimonial ? styles.active : ""}`}
-                  onClick={() => goToTestimonial(index)}
-                  aria-label={`Testimonial ${index + 1}`}
-                ></button>
-              ))}
-            </div>
 
             <button
               className={`${styles["carousel-btn"]} ${styles.next}`}

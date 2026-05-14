@@ -125,3 +125,51 @@ frontend/src/pages/Login.jsx Formulario de login — POST /api/auth/login, guard
 frontend/src/pages/Register.jsx Formulario de registro — validación en cliente (email, longitud, confirmación), POST /api/auth/register
 frontend/src/pages/Auth.module.css CSS compartido por ambas páginas — card centrada, gradiente de marca, responsive
 Ambas páginas tienen estados de loading (botón deshabilitado + texto cambiante) y error (caja roja con el mensaje de la API). Se enlazan entre sí con Link.
+
+#### FASE 3
+
+Lo que se ha creado:
+
+Archivo Qué hace
+frontend/src/pages/Services.jsx Catálogo — fetch real /api/services, filtros por categoría, cards con precio, loading/error/empty
+frontend/src/pages/Checkout.jsx Checkout — fetch del servicio, formulario 100% dinámico generado desde formConfig, validación de campos requeridos, POST /api/orders
+frontend/src/pages/OrderSuccess.jsx Página de éxito — checkmark, mensaje, links a dashboard y catálogo
+Flujo completo funciona: /servicios → elige servicio → si no hay sesión va a /login → tras login vuelve al checkout → rellena el formulario dinámico → POST order → /gracias.
+
+¿Seguimos con el Bloque 4 — Dashboard, detalle de pedido y perfil?
+
+#### FASE 4
+
+Lo que se ha creado:
+
+Archivo Qué hace
+frontend/src/pages/Dashboard.jsx 3 contadores (activos/completados/total), lista de pedidos con badge de estado, link a nuevo servicio
+frontend/src/pages/OrderDetail.jsx Timeline visual (4 pasos), sección de entregables con links, datos del formulario enviado
+frontend/src/pages/Profile.jsx Avatar generado del email, formulario fullName/phone/companyName, mensaje de éxito al guardar
+Estado del router ahora — 9 rutas activas:
+
+/ Home
+/servicios Services
+/login Login
+/register Register
+/checkout/:id Checkout ← protegida
+/gracias OrderSuccess ← protegida
+/dashboard Dashboard ← protegida
+/dashboard/pedido/:id OrderDetail ← protegida
+/perfil Profile ← protegida
+Queda el Bloque 5 — actualizar el NavBar para que muestre Login/Logout según sesión y use <Link> de React Router en lugar de <a>. ¿Lo hacemos?
+
+#### FASE 5
+
+Resumen de lo que hace ahora el NavBar:
+
+Estado Menú que ve el usuario
+Sin sesión Servicios · Entrar (botón degradado → /login)
+Con sesión Servicios · Dashboard · Mi perfil · Salir (borde fino, hover violeta)
+Logout borra el token del localStorage, limpia el contexto y redirige a /.
+
+El frontend completo tiene 9 rutas 100% funcionales. Para probarlo en local:
+
+Levanta el backend: cd backend && npm run dev
+Levanta el frontend: cd frontend && npm run dev
+Flujo demo: /servicios → elige un servicio → /login → checkout → /gracias → /dashboard
