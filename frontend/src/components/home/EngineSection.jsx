@@ -24,7 +24,15 @@ const EngineSection = ({ config = SECTOR_CONFIG.engine }) => {
         <div className={styles["advantages-grid"]}>
           {advantages.map((advantage) => (
             <div key={advantage.id} className={styles["advantage-card"]}>
-              <div className={styles["advantage-icon"]}>{advantage.icon}</div>
+              {advantage.visual ? (
+                <img
+                  src={advantage.visual}
+                  alt={advantage.title}
+                  className={styles["advantage-visual"]}
+                />
+              ) : (
+                <div className={styles["advantage-icon"]}>{advantage.icon}</div>
+              )}
               <h3 className={styles["advantage-title"]}>{advantage.title}</h3>
               <p className={styles["advantage-description"]}>
                 {advantage.description}

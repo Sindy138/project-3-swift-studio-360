@@ -3,13 +3,8 @@
    ============================================ */
 
 .engine-section {
-  padding: var(--space-10) 0;
-  background: linear-gradient(
-    135deg,
-    var(--color-primary-800) 0%,
-    var(--color-primary-900) 50%,
-    rgba(44, 62, 80, 0.95) 100%
-  );
+  padding: var(--space-24) var(--space-10);
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
   color: white;
   position: relative;
   overflow: hidden;
@@ -24,6 +19,7 @@
   width: 100%;
   height: 100%;
   background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-size: 40px 40px;
   pointer-events: none;
   z-index: 0;
 }
@@ -43,6 +39,8 @@
 
 .engine-section .section-title {
   color: white;
+  margin-bottom: var(--space-10);
+  text-align: center;
 }
 
 .engine-section .section-title::after {
@@ -59,6 +57,9 @@
 
 .engine-section .section-description {
   color: rgba(255, 255, 255, 0.8);
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--space-16);
+  text-align: center;
 }
 
 /* Advantages Grid */
@@ -70,21 +71,57 @@
 }
 
 .advantage-card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  position: relative;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(0, 0, 0, 0.15) 100%
+  );
+  backdrop-filter: blur(1px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
   padding: var(--space-8);
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top-color: rgba(255, 255, 255, 0.3);
   transition: all var(--transition-normal);
-  text-align: center;
+  overflow: hidden;
 }
 
 .advantage-card:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.4);
-  transform: translateY(-4px);
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  border-top-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
+.advantage-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: 0.7s;
+}
+
+.advantage-card:hover::after {
+  left: 150%;
+}
+
+/*
 .advantage-icon {
   font-size: 48px;
   margin-bottom: var(--space-6);
@@ -95,11 +132,27 @@
 .advantage-card:hover .advantage-icon {
   transform: scale(1.2);
 }
+*/
+
+.advantage-visual {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin-bottom: var(--space-6);
+  display: block;
+  border-radius: var(--radius-lg);
+  transition: transform var(--transition-normal);
+}
+
+.advantage-card:hover .advantage-visual {
+  transform: scale(1.05);
+}
 
 .advantage-title {
   font-size: var(--font-size-lg);
   font-weight: 700;
   margin-bottom: var(--space-6);
+  color: white;
 }
 
 .advantage-description {
@@ -110,45 +163,60 @@
 
 /* Comparison Section */
 .comparison-section {
-  margin-top: var(--space-10);
-  padding: var(--space-8);
+  margin-top: var(--space-20);
+  padding: var(--space-10);
   background: rgba(255, 255, 255, 0.05);
   border-radius: var(--radius-lg);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  display: none;
 }
 
 .comparison-title {
+  color: white;
   text-align: center;
   font-size: var(--font-size-xl);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-12);
 }
 
 .comparison-table {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-8);
+  gap: var(--space-16);
 }
 
 .comparison-column {
-  padding: var(--space-8);
+  padding: var(--space-8) var(--space-6);
   border-radius: var(--radius-lg);
 }
 
 .comparison-column h4 {
+  color: white;
   font-size: var(--font-size-lg);
   margin-bottom: var(--space-8);
   padding-bottom: var(--space-6);
-  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 2px solid rgba(122, 74, 175, 0.9);
 }
 
 .traditional {
-  background: rgba(255, 107, 107, 0.1);
-  border: 1px solid rgba(255, 107, 107, 0.3);
+  background: linear-gradient(
+    135deg,
+    rgba(122, 74, 175, 0.1) 0%,
+    rgba(128, 173, 246, 0.1) 50%,
+    rgba(88, 0, 184, 0.1) 100%
+  );
+  color: white;
+  border: 1px solid rgba(122, 74, 175, 0.5);
 }
 
 .modern {
-  background: rgba(78, 205, 196, 0.1);
-  border: 1px solid rgba(78, 205, 196, 0.3);
+  background: linear-gradient(
+    135deg,
+    rgba(122, 74, 175, 0.1) 0%,
+    rgba(128, 173, 246, 0.1) 50%,
+    rgba(88, 0, 184, 0.1) 100%
+  );
+  color: white;
+  border: 1px solid rgba(122, 74, 175, 0.5);
 }
 
 .comparison-column ul {
@@ -166,18 +234,30 @@
 .engine-cta-section {
   text-align: center;
   margin-top: var(--space-10);
-  padding: var(--space-8);
+  padding: var(--space-12) 0;
   background: linear-gradient(
     135deg,
-    rgba(255, 107, 107, 0.15),
-    rgba(78, 205, 196, 0.15)
+    rgba(122, 74, 175, 0.1) 0%,
+    rgba(128, 173, 246, 0.1) 50%,
+    rgba(88, 0, 184, 0.1) 100%
   );
+  color: white;
+  border: 1px solid rgba(122, 74, 175, 0.5);
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .engine-cta-section .btn {
+  color: var(--color-base);
+  font-weight: 700;
   margin-bottom: var(--space-6);
+  padding: 0.8rem 1.5rem;
+  background: white;
+  border-radius: var(--radius-lg);
+}
+
+.engine-cta-section .btn:hover {
+  color: white;
+  background: linear-gradient(90deg, #ffae8e, #ff7da2, #aa73fa);
 }
 
 .cta-subtitle {

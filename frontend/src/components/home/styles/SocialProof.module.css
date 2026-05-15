@@ -97,7 +97,6 @@
   z-index: 0;
 }
 
-/* Asegúrate de que el contenido de los testimonios esté por encima de los puntos */
 .testimonials-section > * {
   position: relative;
   z-index: 1;

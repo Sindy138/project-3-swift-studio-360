@@ -31,7 +31,7 @@
 }
 
 .eyebrow {
-  font-size: 0.75rem;
+  font-size: var(--font-size-lg);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -109,17 +109,14 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base);
 }
 
 .card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-xl);
-}
-
-.categoryBar {
-  height: 4px;
-  width: 100%;
 }
 
 .cardBody {
@@ -177,7 +174,9 @@
   background: linear-gradient(90deg, #ffae8e, #ff7da2, #aa73fa);
   border-radius: var(--radius-lg);
   text-decoration: none;
-  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  transition:
+    opacity var(--transition-fast),
+    transform var(--transition-fast);
   white-space: nowrap;
 }
 

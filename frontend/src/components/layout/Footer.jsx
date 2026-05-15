@@ -13,11 +13,14 @@ const Footer = () => {
       <div className={styles["footer-container"]}>
         {/* Secciones del footer */}
         <div className={styles["footer-section"]}>
+          <img src="logos/logos-footer.svg" alt="Logo Swift Studio" />
+          {/*
           <h4>Swift Studio</h4>
           <p>
             Agencia 360º | Fotografía • Social Media • SEO • Blogs •
             Automatización
           </p>
+          */}
         </div>
 
         <div className={styles["footer-section"]}>

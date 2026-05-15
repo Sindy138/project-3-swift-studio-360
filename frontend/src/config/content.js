@@ -219,12 +219,20 @@ export const SECTOR_CONFIG = {
   // 5. THE ENGINE SECTION
   // =========================================
   engine: {
-    title: "The Engine",
-    subtitle: "¿Qué nos diferencia de una agencia tradicional?",
+    title: "¿Qué nos diferencia de una agencia tradicional?",
+    /*subtitle: "¿Qué nos diferencia de una agencia tradicional?",*/
     description:
       "Agencias 360º + Automatización Avanzada = Resultados Exponenciales",
 
     advantages: [
+      {
+        id: "advantage-4",
+        title: "Equipo Especializado",
+        description:
+          "SEO Experts, Fotógrafos, Content Writers y Automation Engineers. Todo integrado.",
+        visual: "/engine/engine.gif",
+      },
+      /*
       {
         id: "advantage-1",
         title: "Dashboard Propio",
@@ -232,26 +240,20 @@ export const SECTOR_CONFIG = {
           "Panel centralizado para monitorear todos tus servicios en tiempo real. ROI visible.",
         icon: "📈",
       },
+      */
       {
         id: "advantage-2",
         title: "Integraciones n8n",
         description:
           "Conecta todos tus sistemas. CRM, Email, Analytics, Social. Sin duplicar trabajo.",
-        icon: "🔗",
+        visual: "/engine/engine.gif",
       },
       {
         id: "advantage-3",
         title: "Optimización Continua",
         description:
           "Machine learning y análisis de datos para mejora permanente. No solo ejecución.",
-        icon: "🤖",
-      },
-      {
-        id: "advantage-4",
-        title: "Equipo Especializado",
-        description:
-          "SEO Experts, Fotógrafos, Content Writers y Automation Engineers. Todo integrado.",
-        icon: "👥",
+        visual: "/engine/engine.gif",
       },
     ],
 
@@ -274,12 +276,12 @@ export const SECTOR_CONFIG = {
         label: "Proyectos Completados",
       },
       {
-        metric: "95%",
+        metric: "99%",
         label: "Satisfacción de Clientes",
       },
       {
-        metric: "6 Meses",
-        label: "Tiempo promedio para resultados",
+        metric: "6",
+        label: "Meses, resultados",
       },
       {
         metric: "300%",

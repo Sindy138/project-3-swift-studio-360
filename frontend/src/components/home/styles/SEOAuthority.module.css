@@ -10,7 +10,17 @@
 .authority-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 var(--space-8);
+  padding: var(--space-20) var(--space-8);
+  text-align: center;
+}
+
+.authority-container h2 {
+  margin-bottom: var(--space-10);
+}
+
+.authority-container p {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--space-16);
 }
 
 /* Key Stats Grid */
@@ -24,11 +34,13 @@
 .stat-card {
   background: white;
   padding: var(--space-8);
-  border-radius: var(--radius-lg);
   text-align: center;
+  transition: all var(--transition-normal);
+  /*
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   border-top: 4px solid var(--color-primary);
-  transition: all var(--transition-normal);
+  */
 }
 
 .stat-card:nth-child(2) {
@@ -40,7 +52,7 @@
 }
 
 .stat-card:nth-child(4) {
-  border-top-color: #a8e6cf;
+  border-top-color: #7a4aaf;
 }
 
 .stat-card:hover {
@@ -49,7 +61,7 @@
 }
 
 .stat-metric {
-  font-size: var(--font-size-4xl);
+  font-size: var(--font-size-3xl);
   font-weight: 700;
   color: var(--color-primary);
   margin-bottom: var(--space-6);
@@ -64,7 +76,7 @@
 }
 
 .stat-card:nth-child(4) .stat-metric {
-  color: #a8e6cf;
+  color: #8c52ff;
 }
 
 .stat-label {
@@ -85,6 +97,7 @@
 
 .authority-text {
   max-width: 800px;
+  margin: 0 auto;
 }
 
 .authority-paragraph {
@@ -97,20 +110,31 @@
 /* Authority CTA Section */
 .authority-cta-section {
   text-align: center;
-  padding: var(--space-8);
+  margin: var(--space-20) 0;
+  padding: var(--space-10);
   background: linear-gradient(
     135deg,
     rgba(255, 107, 107, 0.1),
     rgba(78, 205, 196, 0.1)
   );
   border-radius: var(--radius-lg);
-  border: 1px solid var(--color-primary);
 }
 
 .authority-cta-section h3 {
   font-size: var(--font-size-xl);
   color: var(--color-dark);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-10);
+}
+
+.authority-cta-section > a {
+  font-size: var(--font-size-lg);
+  color: white;
+  height: 700;
+  max-width: 600px;
+  margin: 0 auto var(--space-8);
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--radius-md);
+  background: linear-gradient(90deg, #ffae8e, #ff7da2, #aa73fa);
 }
 
 /* Structured Data (oculto pero importante para SEO) */
