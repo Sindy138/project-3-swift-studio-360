@@ -1,0 +1,789 @@
+{
+  "info": {
+    "_postman_id": "4b37b779-0e23-4c9d-bd65-634e2c03f485",
+    "name": "swift-studio-360",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "45650193"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"usuario@test.com\", \"password\": \"password123\"}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"usuario@test.com\", \"password\": \"password123\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ver perfil",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcDg4bGxtbTAwMDAyOHRqN25pb2dpd2ciLCJlbWFpbCI6InVzdWFyaW9AdGVzdC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc3ODkyOTUzOSwiZXhwIjoxNzc5NTM0MzM5fQ.rsVj5DvL2ScckbLln-koThV7acYJZb_JKWu8mQ3NKcY",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/users/cmp88llmm000028tj7niogiwg",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "users",
+                "cmp88llmm000028tj7niogiwg"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar Perfil",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcDg4bGxtbTAwMDAyOHRqN25pb2dpd2ciLCJlbWFpbCI6InVzdWFyaW9AdGVzdC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc3ODkyOTUzOSwiZXhwIjoxNzc5NTM0MzM5fQ.rsVj5DvL2ScckbLln-koThV7acYJZb_JKWu8mQ3NKcY",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"fullName\": \"Ana García\",\r\n  \"phone\": \"600123456\",\r\n  \"companyName\": \"AirBnB SL\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/users/cmp88llmm000028tj7niogiwg",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "users",
+                "cmp88llmm000028tj7niogiwg"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ver Servicios",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/services",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "services"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear Order",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcDg4bGxtbTAwMDAyOHRqN25pb2dpd2ciLCJlbWFpbCI6InVzdWFyaW9AdGVzdC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc3ODkyOTUzOSwiZXhwIjoxNzc5NTM0MzM5fQ.rsVj5DvL2ScckbLln-koThV7acYJZb_JKWu8mQ3NKcY",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"serviceId\": \"cmp1cykvf0004estjmid8xdgy\",\r\n  \"configData\": { \"brief\": \"Quiero algo minimalista\", \"colores\": [\"azul\", \"blanco\"] }\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/orders",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ver ordenes",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcDg4bGxtbTAwMDAyOHRqN25pb2dpd2ciLCJlbWFpbCI6InVzdWFyaW9AdGVzdC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc3ODkyOTUzOSwiZXhwIjoxNzc5NTM0MzM5fQ.rsVj5DvL2ScckbLln-koThV7acYJZb_JKWu8mQ3NKcY",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/orders",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ver detalle orden",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcDg4bGxtbTAwMDAyOHRqN25pb2dpd2ciLCJlbWFpbCI6InVzdWFyaW9AdGVzdC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc3ODkyOTUzOSwiZXhwIjoxNzc5NTM0MzM5fQ.rsVj5DvL2ScckbLln-koThV7acYJZb_JKWu8mQ3NKcY",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/orders/cmp89wa5x00018wtjbbn7lbpf",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "orders",
+                "cmp89wa5x00018wtjbbn7lbpf"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ver Deliverables",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcDg4bGxtbTAwMDAyOHRqN25pb2dpd2ciLCJlbWFpbCI6InVzdWFyaW9AdGVzdC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc3ODkyOTUzOSwiZXhwIjoxNzc5NTM0MzM5fQ.rsVj5DvL2ScckbLln-koThV7acYJZb_JKWu8mQ3NKcY",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/orders/cmp89wa5x00018wtjbbn7lbpf/deliverables",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "orders",
+                "cmp89wa5x00018wtjbbn7lbpf",
+                "deliverables"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Registro Admin",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"admin@admin.com\", \"password\": \"admin123\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Admin (se debe cambiar el rol en prisma studio)",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"admin@admin.com\", \"password\": \"admin123\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ver usuarios",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcDJxenM0MjAwMDFnMHRqMG1rcW5jMm0iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3ODkyNzQ3NSwiZXhwIjoxNzc5NTMyMjc1fQ.rqri7F6ym1ha1FgyuDavlcNcDLpfOqXE4iNa6Kw3USI",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ver usuario",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcDJxenM0MjAwMDFnMHRqMG1rcW5jMm0iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3ODkyNzQ3NSwiZXhwIjoxNzc5NTMyMjc1fQ.rqri7F6ym1ha1FgyuDavlcNcDLpfOqXE4iNa6Kw3USI",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/users/cmp88llmm000028tj7niogiwg",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "users",
+                "cmp88llmm000028tj7niogiwg"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar usuario",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcDJxenM0MjAwMDFnMHRqMG1rcW5jMm0iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3ODkyNzQ3NSwiZXhwIjoxNzc5NTMyMjc1fQ.rqri7F6ym1ha1FgyuDavlcNcDLpfOqXE4iNa6Kw3USI",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"phone\": \"655123456\",\r\n  \"companyName\": \"Airbnb\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/users/cmp88llmm000028tj7niogiwg",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "users",
+                "cmp88llmm000028tj7niogiwg"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar Usuario",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcDJxenM0MjAwMDFnMHRqMG1rcW5jMm0iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3ODkzMjA4NywiZXhwIjoxNzc5NTM2ODg3fQ.lR1zdBQnG1PdZk0NcnZVTziYlWKQmQETEw62CHHPqW0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/users/cmp8asace00038wtjfmkthei7",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "users",
+                "cmp8asace00038wtjfmkthei7"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear servicio",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcDJxenM0MjAwMDFnMHRqMG1rcW5jMm0iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3ODkzMjA4NywiZXhwIjoxNzc5NTM2ODg3fQ.lR1zdBQnG1PdZk0NcnZVTziYlWKQmQETEw62CHHPqW0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Logo Design\",\r\n  \"description\": \"Diseño de logotipo profesional\",\r\n  \"price\": 299.99,\r\n  \"category\": \"Branding\",\r\n  \"formConfig\": { \"style\": [\"minimalista\", \"moderno\"] }\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/services",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "services"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar servicio",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcDJxenM0MjAwMDFnMHRqMG1rcW5jMm0iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3ODkzMjA4NywiZXhwIjoxNzc5NTM2ODg3fQ.lR1zdBQnG1PdZk0NcnZVTziYlWKQmQETEw62CHHPqW0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"price\": 349.99\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/services/cmp8avycc00048wtjog8s17a5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "services",
+                "cmp8avycc00048wtjog8s17a5"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar servicio",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcDJxenM0MjAwMDFnMHRqMG1rcW5jMm0iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3ODkzMjA4NywiZXhwIjoxNzc5NTM2ODg3fQ.lR1zdBQnG1PdZk0NcnZVTziYlWKQmQETEw62CHHPqW0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/services/cmp8avycc00048wtjog8s17a5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "services",
+                "cmp8avycc00048wtjog8s17a5"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ver ordenes",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcDJxenM0MjAwMDFnMHRqMG1rcW5jMm0iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3ODkzMjA4NywiZXhwIjoxNzc5NTM2ODg3fQ.lR1zdBQnG1PdZk0NcnZVTziYlWKQmQETEw62CHHPqW0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/orders",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ver orden",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcDJxenM0MjAwMDFnMHRqMG1rcW5jMm0iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3ODkzMjA4NywiZXhwIjoxNzc5NTM2ODg3fQ.lR1zdBQnG1PdZk0NcnZVTziYlWKQmQETEw62CHHPqW0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/orders/cmp89wa5x00018wtjbbn7lbpf",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "orders",
+                "cmp89wa5x00018wtjbbn7lbpf"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cambiar estado Orden",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcDJxenM0MjAwMDFnMHRqMG1rcW5jMm0iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3ODkzMjA4NywiZXhwIjoxNzc5NTM2ODg3fQ.lR1zdBQnG1PdZk0NcnZVTziYlWKQmQETEw62CHHPqW0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"status\": \"PROGRESS\" }\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/orders/cmp89wa5x00018wtjbbn7lbpf/status",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "orders",
+                "cmp89wa5x00018wtjbbn7lbpf",
+                "status"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Añadir entregable a una orden",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcDJxenM0MjAwMDFnMHRqMG1rcW5jMm0iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3ODkzMjA4NywiZXhwIjoxNzc5NTM2ODg3fQ.lR1zdBQnG1PdZk0NcnZVTziYlWKQmQETEw62CHHPqW0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"label\": \"Edición Sesión de Fotos finalizada\",\r\n  \"url\": \"https://drive.google.com/file/logo-final.pdf\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/orders/cmp4cgtyt0000lstjgrt3gk8h/deliverables",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "orders",
+                "cmp4cgtyt0000lstjgrt3gk8h",
+                "deliverables"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ver entregables",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcDJxenM0MjAwMDFnMHRqMG1rcW5jMm0iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3ODkzMjA4NywiZXhwIjoxNzc5NTM2ODg3fQ.lR1zdBQnG1PdZk0NcnZVTziYlWKQmQETEw62CHHPqW0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/orders/cmp4cgtyt0000lstjgrt3gk8h/deliverables",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "orders",
+                "cmp4cgtyt0000lstjgrt3gk8h",
+                "deliverables"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

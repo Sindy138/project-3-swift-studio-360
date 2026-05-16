@@ -64,4 +64,24 @@ const updateUser = asyncHandler(async (req, res) => {
   return res.json(updated)
 })
 
-module.exports = { listUsers, getUser, updateUser }
+const deleteUser = asyncHandler(async (req, res) => {
+  if (req.user.id === req.params.id) {
+    return res.status(403).json({ error: 'You cannot delete your own account' })
+  }
+
+  const user = await prisma.user.findUnique({ where: { id: req.params.id } })
+  if (!user) return res.status(404).json({ error: 'User not found' })
+
+  try {
+    await prisma.user.delete({ where: { id: req.params.id } })
+  } catch (err) {
+    if (err.code === 'P2003') {
+      return res.status(409).json({ error: 'Cannot delete user with existing orders' })
+    }
+    throw err
+  }
+
+  return res.status(204).send()
+})
+
+module.exports = { listUsers, getUser, updateUser, deleteUser }
