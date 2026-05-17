@@ -54,7 +54,7 @@ Crea un archivo `.env` en la raíz del frontend:
 |---|---|---|
 | `VITE_API_URL` | URL base del backend | `http://localhost:3000` |
 
-> En producción, `VITE_API_URL` debe apuntar a la URL pública del backend desplegado.
+> En producción, el frontend se sirve desde el mismo dominio que el backend (deploy full-stack en Render), por lo que `VITE_API_URL` debe apuntar a esa misma URL pública. El archivo `.env` ya incluye la URL de producción configurada.
 
 ---
 
@@ -62,10 +62,29 @@ Crea un archivo `.env` en la raíz del frontend:
 
 ```bash
 npm run dev       # Servidor de desarrollo en http://localhost:5173
-npm run build     # Compila para producción (salida en /dist)
+npm run build     # Compila para producción (salida en dist/)
 npm run preview   # Preview de la build de producción
 npm run lint      # Valida el código con ESLint
 ```
+
+---
+
+## Build y deploy en producción
+
+El frontend no se despliega por separado. Se compila y el resultado se incluye en el backend para un **deploy full-stack en Render**.
+
+### Proceso
+
+```bash
+# 1. Asegúrate de que .env tiene VITE_API_URL apuntando a la URL de Render
+# 2. Compila
+npm run build
+
+# 3. Copia el contenido de dist/ a backend/public/
+# 4. Haz commit de backend/public/ y push
+```
+
+Render detecta el push y redespliega el backend, que servirá el nuevo frontend automáticamente desde `backend/public/`.
 
 ---
 

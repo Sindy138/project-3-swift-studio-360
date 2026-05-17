@@ -84,6 +84,7 @@ backend/
 │   ├── schema.prisma         # Modelos y relaciones de la base de datos
 │   ├── seed.js               # Carga inicial de los 8 servicios del catálogo
 │   └── migrations/           # Historial de migraciones (generado por Prisma)
+├── public/                   # Build del frontend (dist/ copiado aquí) — servido estáticamente en producción
 ├── src/
 │   ├── features/
 │   │   ├── auth/
@@ -109,7 +110,7 @@ backend/
 │   ├── lib/
 │   │   ├── prisma.js                 # Instancia única del PrismaClient
 │   │   └── asyncHandler.js          # Wrapper que propaga errores async al errorHandler
-│   ├── app.js                        # Configuración de Express (middlewares + rutas)
+│   ├── app.js                        # Configuración de Express (middlewares + rutas + static)
 │   └── server.js                     # Arranque del servidor
 ├── tests/
 │   └── api.test.js                   # 10 tests de integración con Vitest + Supertest
@@ -635,4 +636,49 @@ npx prisma generate  # Regenera el cliente de Prisma
 npx prisma migrate dev --name <nombre>  # Nueva migración
 npx prisma db seed   # Recarga el catálogo de servicios
 npx prisma studio    # Interfaz visual de la base de datos
+```
+
+---
+
+## Deploy en producción (Render)
+
+El backend se despliega en Render como un **Web Service** desde la carpeta `backend/`. Además de la API, sirve el frontend compilado desde `backend/public/` como archivos estáticos.
+
+### Configuración del servicio en Render
+
+| Campo | Valor |
+|---|---|
+| **Root Directory** | `backend` |
+| **Build Command** | `npm ci --include=dev && npx prisma generate` |
+| **Start Command** | `npx prisma migrate deploy && node src/server.js` |
+
+### Variables de entorno en Render
+
+| Variable | Descripción |
+|---|---|
+| `DATABASE_URL` | URL interna de la base de datos PostgreSQL del servicio Render |
+| `JWT_SECRET` | Clave secreta para JWT (mín. 32 caracteres) |
+
+> `PORT` lo inyecta Render automáticamente. `CORS_ORIGIN` no es necesaria en producción porque frontend y API se sirven desde la misma URL.
+
+### Actualizar el frontend en producción
+
+Cada vez que haya cambios en el frontend:
+
+```bash
+cd frontend
+npm run build
+# Reemplaza el contenido de backend/public/ con el nuevo dist/
+```
+
+Luego haz commit de `backend/public/` y push — Render redespliega automáticamente.
+
+### Compatibilidad con Express 5
+
+Express 5 no acepta el wildcard `"*"` suelto en rutas. La ruta SPA fallback en `app.js` usa la sintaxis correcta:
+
+```js
+app.get("/*splat", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public", "index.html"));
+});
 ```

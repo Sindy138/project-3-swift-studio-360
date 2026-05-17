@@ -22,8 +22,11 @@ Plataforma web completa para una agencia de marketing digital. Los clientes expl
 
 ```
 project-3-swift-studio-360/
-├── frontend/    # SPA React — catálogo, checkout, dashboard, perfil
-└── backend/     # API REST — auth, servicios, pedidos, usuarios
+├── frontend/           # SPA React — catálogo, checkout, dashboard, perfil
+└── backend/
+    ├── src/            # API REST — auth, servicios, pedidos, usuarios
+    ├── prisma/         # Schema, migraciones y seed
+    └── public/         # Build del frontend (dist/) copiado aquí para el deploy
 ```
 
 ---
@@ -70,6 +73,40 @@ npm run dev            # http://localhost:5173
 | Variable | Valor por defecto |
 |---|---|
 | `VITE_API_URL` | `http://localhost:3000` |
+
+---
+
+## Deploy en producción (Render)
+
+El proyecto se despliega como un **único servicio full-stack en Render**: el backend sirve la API y además sirve el frontend como archivos estáticos desde `backend/public/`.
+
+### Preparar el build del frontend
+
+```bash
+cd frontend
+npm run build
+# Copia el contenido de frontend/dist/ a backend/public/
+```
+
+La carpeta `backend/public/` ya está incluida en el repositorio con el último build.
+
+### Configuración del servicio en Render
+
+| Campo | Valor |
+|---|---|
+| **Root Directory** | `backend` |
+| **Build Command** | `npm ci --include=dev && npx prisma generate` |
+| **Start Command** | `npx prisma migrate deploy && node src/server.js` |
+
+### Variables de entorno requeridas en Render
+
+| Variable | Descripción |
+|---|---|
+| `DATABASE_URL` | URL interna de la base de datos PostgreSQL de Render |
+| `JWT_SECRET` | Clave secreta para JWT (mín. 32 caracteres) |
+| `PORT` | Render lo inyecta automáticamente |
+
+> `CORS_ORIGIN` no es necesaria en producción: frontend y backend se sirven desde la misma URL, por lo que no hay peticiones cross-origin.
 
 ---
 
