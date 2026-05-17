@@ -299,6 +299,7 @@ Los valores válidos son: `PENDING`, `PROGRESS`, `DONE`.
 | GET | `/api/users` | Lista todos los usuarios | Admin |
 | GET | `/api/users/:id` | Detalle de un usuario | Admin o propio usuario |
 | PUT | `/api/users/:id` | Actualizar datos y perfil | Admin o propio usuario |
+| DELETE | `/api/users/:id` | Eliminar usuario (hard delete) | Admin |
 
 **Body PUT (todos los campos opcionales):**
 ```json
@@ -314,6 +315,9 @@ Los valores válidos son: `PENDING`, `PROGRESS`, `DONE`.
 **Reglas de negocio:**
 - Un usuario no puede cambiar su propio `role` → `403 Forbidden`
 - Los campos `fullName`, `phone` y `companyName` se guardan en la tabla `Profile` (upsert automático)
+- Un ADMIN no puede eliminarse a sí mismo → `403 Forbidden`
+- No se puede eliminar un usuario que tenga pedidos asociados → `409 Conflict`
+- El `Profile` del usuario se elimina en cascada al borrar el usuario
 
 ---
 
@@ -323,6 +327,8 @@ Las rutas que requieren autenticación esperan el token en la cabecera:
 ```
 Authorization: Bearer <token>
 ```
+
+El token JWT expira a los **7 días**. Payload incluido: `{ id, email, role }`.
 
 Las rutas de administrador además verifican `role === 'ADMIN'` → `403 Forbidden` si no cumple.
 
@@ -341,6 +347,7 @@ Las rutas de administrador además verifican `role === 'ADMIN'` → `403 Forbidd
 | GET `/api/users` | ❌ | ❌ | ✅ |
 | GET `/api/users/:id` | ❌ | Solo propio | ✅ |
 | PUT `/api/users/:id` | ❌ | Solo propio (sin `role`) | ✅ |
+| DELETE `/api/users/:id` | ❌ | ❌ | ✅ (no puede borrarse a sí mismo) |
 
 **Soft delete — patrón aplicado en `Service`:**
 
@@ -570,11 +577,21 @@ app.use(morgan('dev'))
 
 ## Tests
 
-Suite de **10 tests de integración** en `tests/api.test.js` con Vitest + Supertest. Los tests golpean la base de datos real — requieren que la base de datos esté en marcha y que `DATABASE_URL` esté configurado en `.env`.
+Suite de **10 tests de integración** en `tests/api.test.js` con Vitest + Supertest.
+
+### Requisitos previos
+
+Los tests golpean la **base de datos real**, no mocks. Antes de ejecutarlos:
+
+1. PostgreSQL debe estar en marcha.
+2. El archivo `.env` debe existir con `DATABASE_URL` y `JWT_SECRET` correctos.
+3. Las migraciones deben estar aplicadas (`npx prisma migrate dev`).
 
 ```bash
 npm test
 ```
+
+### Cobertura
 
 | # | Descripción | Ruta | Verifica |
 |---|---|---|---|
@@ -589,10 +606,23 @@ npm test
 | 9 | Ownership en listado | `GET /api/orders` | Todos los pedidos pertenecen al usuario autenticado |
 | 10 | Cambio de estado por rol | `PUT /api/orders/:id/status` | User → `403`; Admin → `200` con estado actualizado |
 
-**Estrategia de aislamiento:**
-- Cada ejecución usa emails con timestamp (`user_<ts>@swift-test.com`) para evitar colisiones con datos existentes.
-- `beforeAll` crea los usuarios de prueba y un servicio auxiliar directamente en BD.
-- `afterAll` elimina todos los datos generados por los tests (pedidos, servicios, perfiles, usuarios).
+### Estrategia de aislamiento
+
+Los tests están diseñados para no interferir entre sí ni con datos existentes en la BD:
+
+- **Emails con timestamp**: cada ejecución genera usuarios únicos (`user_<ts>@swift-test.com`, `admin_<ts>@swift-test.com`). Nunca colisionan con ejecuciones anteriores ni con datos reales.
+- **`beforeAll`**: registra los usuarios de prueba vía la propia API, promueve al admin directamente en BD (`prisma.user.update`), y crea un servicio auxiliar para los tests de pedidos.
+- **`afterAll`**: limpia todos los datos generados — pedidos, servicios de test (soft delete), perfiles y usuarios — y desconecta Prisma. Los entregables se eliminan en cascada con los pedidos.
+
+### Fallos comunes
+
+| Síntoma | Causa más probable | Solución |
+|---|---|---|
+| `connect ECONNREFUSED` | PostgreSQL no está corriendo | Arranca el servidor de BD |
+| `Invalid prisma.user.create()` o error de migración | Schema desincronizado | `npx prisma migrate dev` |
+| `.env` variables `undefined` | Falta el archivo `.env` | Copia `.env.example` y rellena los valores |
+| Tests 6–10 fallan pero 1–5 pasan | El `beforeAll` no completó el login del admin | Revisa que `JWT_SECRET` esté definido en `.env` |
+| Error `P2002` en `beforeAll` | Email de test ya existe en BD (ejecución interrumpida antes del `afterAll`) | Borra manualmente los registros `*@swift-test.com` o limpia la BD de desarrollo |
 
 ---
 
